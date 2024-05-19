@@ -101,19 +101,21 @@ bool isValidNgayVaoLam(const std::string& ngayVaoLam) {
 	return true;
 }
 bool isValidPhoneNumber(const std::string& soDienThoai) {
+	bool result = false;
+
 	// Kiểm tra độ dài của chuỗi Kiểm tra ký tự đầu tiên có phải là số 0
 	if (soDienThoai.length() != 10 || soDienThoai[0] != '0') {
-		return false;
+		result = false;
 	}
 
 	// Kiểm tra các ký tự còn lại có phải là số
 	for (int i = 1; i < soDienThoai.length(); i++) {
 		if (!isdigit(soDienThoai[i])) {
-			return false;
+			result = false;
 		}
 	}
-
-	return true;
+	result = true;
+	return result;
 }
 
 void nhapCung(vector<Employee*>& danhSachNhanVien)

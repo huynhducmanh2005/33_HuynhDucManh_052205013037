@@ -6,17 +6,17 @@
 
 void khung() {
 	cout << setfill(' ');
-	cout << setw(8) << left << "Ma" << setw(15) << left << "Nam SX";
-	cout << setw(20) << left << "Dung Tich Dong Co" << setw(15) << left << "Tri Gia Xe";
+	cout << setw(8) << left << "Ma" << setw(13) << left << "Nam SX";
+	cout << setw(21) << left << "Dung Tich Dong Co" << setw(16) << left << "Tri Gia Xe";
 
 }
 
 void nhapCung(vector<Showroom*>& danhSachXe) {
-	danhSachXe.push_back(new OtoKhach("001", 2003, 300, 30000000000, "xe khac", 20));
-	danhSachXe.push_back(new OtoKhach("002", 2008, 300, 800000000, "xe du lich", 17));
-	danhSachXe.push_back(new OtoKhach("003", 2004, 800, 450000000, "xe ban tai", 2));
-	danhSachXe.push_back(new OtoTai("004", 2007, 300, 300000000, 1000));
-	danhSachXe.push_back(new OtoTai("005", 2005, 400, 350000000, 850));
+	danhSachXe.push_back(new OtoKhach("K001", 2003, 300, 30000000000, "xe khac", 20));
+	danhSachXe.push_back(new OtoKhach("K002", 2008, 300, 800000000, "xe du lich", 17));
+	danhSachXe.push_back(new OtoKhach("K003", 2004, 800, 450000000, "xe ban tai", 2));
+	danhSachXe.push_back(new OtoTai("T004", 2007, 300, 300000000, 1000));
+	danhSachXe.push_back(new OtoTai("T005", 2005, 400, 350000000, 850));
 	cout << endl;
 }
 void xuatDanhSachXe(vector<Showroom*> danhSachXe) {
@@ -24,7 +24,7 @@ void xuatDanhSachXe(vector<Showroom*> danhSachXe) {
 	cout << setfill('=') << setw(65) << right << " * Oto Khach * " << setw(42) << right << "=" << endl;
 	cout << endl;
 	khung();
-	cout << setw(16) << left << "Loai Xe" << setw(10) << left << "So cho" << setw(15) << left << "Thue" << endl;
+	cout << setw(16) << left << "Loai Xe" << setw(12) << left << "So cho" << setw(17) << left << "Thue" << endl;
 	cout << setfill('-') << setw(107) << "-" << endl;
 	for (int i = 0; i < danhSachXe.size(); i++) {
 		if (OtoKhach* otokhach = dynamic_cast<OtoKhach*>(danhSachXe[i])) {
@@ -44,6 +44,15 @@ void xuatDanhSachXe(vector<Showroom*> danhSachXe) {
 	}
 }
 
+bool kiemTraMaTrung(const vector<Showroom*>& danhSachXe, const string& ma) {
+	for (const auto& xe : danhSachXe) {
+		if (xe->getMa() == ma) {
+			return true;
+		}
+	}
+	return false;
+}
+
 vector<Showroom*> danhSachXe;
 void themXe(string& ma, int& namSX, double& dungTichDongCo, int& triGiaXe) {
 	cin.ignore();
@@ -57,12 +66,17 @@ void themXe(string& ma, int& namSX, double& dungTichDongCo, int& triGiaXe) {
 	cin >> triGiaXe;
 
 }
-OtoKhach nhapotokhach() {
+OtoKhach nhapotokhach(vector<Showroom*>& danhSachXe) {
 	OtoKhach otokhach;
 	string ma, loaiXe;
 	double dungTichDongCo;
 	int triGiaXe, namSX, soCho;
-	themXe(ma, namSX, dungTichDongCo, triGiaXe);
+	do {
+		themXe(ma, namSX, dungTichDongCo, triGiaXe);
+		if (kiemTraMaTrung(danhSachXe, ma)) {
+			cout << "Ma xe da ton tai. Vui long nhap ma khac." << endl;
+		}
+	} while (kiemTraMaTrung(danhSachXe, ma));
 	cin.ignore();
 	cout << "Loai xe:";
 	getline(cin, loaiXe);
@@ -76,87 +90,103 @@ OtoKhach nhapotokhach() {
 	otokhach.setSoCho(soCho);
 	return otokhach;
 }
-OtoTai nhapototai() {
+OtoTai nhapototai(vector<Showroom*>& danhSachXe) {
 	string ma;
 	double dungTichDongCo;
 	int triGiaXe, namSX;
 	float taiTrong;
-	themXe(ma, namSX, dungTichDongCo, triGiaXe);
+	do {
+		themXe(ma, namSX, dungTichDongCo, triGiaXe);
+		if (kiemTraMaTrung(danhSachXe, ma)) {
+			cout << "Ma xe da ton tai. Vui long nhap ma khac." << endl;
+		}
+	} while (kiemTraMaTrung(danhSachXe, ma));
 	cout << "Tai trong: ";
 	cin >> taiTrong;
 	return OtoTai(ma, namSX, dungTichDongCo, triGiaXe, taiTrong);
 }
 void nhapThemXe(vector<Showroom*>& danhSachXe) {
-	int luaChon;
-	do {
-		int chon;
-		cout << "--------------------------------" << endl;
-		cout << "1. Them xe oto khach" << endl;
-		cout << "2. Them xe oto tai" << endl;
-		cout << "0. Thoat khoi phan nhap " << endl;
-		cout << "--------------------------------" << endl;
-		cout << "Nhap: ";
-		cin >> chon;
-		switch (chon) {
-		case 0:
+	int luaChon = 1;
+	while (luaChon != 0) {
+		try {
+			do {
+				int chon;
+				cout << "--------------------------------" << endl;
+				cout << "1. Them xe oto khach" << endl;
+				cout << "2. Them xe oto tai" << endl;
+				cout << "0. Thoat khoi phan nhap " << endl;
+				cout << "--------------------------------" << endl;
+				cout << "Nhap: ";
+				cin >> chon;
+				switch (chon) {
+				case 0:
+				{
+					luaChon = 0;
+					break;
+				}
+				case 1:
+				{
+					int nhap;
+					cout << "THEM XE OTO KHACH" << endl;
+					cout << "-------------------" << endl;
+					do
+					{
+						danhSachXe.push_back(new OtoKhach(nhapotokhach(danhSachXe)));
+						cout << endl;
+						cout << "1. Tiep tuc them oto khach  --- 0. Thoat" << endl;
+						cout << "Nhap:";
+						cin >> nhap;
+					} while (nhap != 0);
+					break;
+				}
+				case 2:
+				{
+					int nhap;
+					cout << "THEM XE OTO TAI" << endl;
+					cout << "-------------------" << endl;
+					do
+					{
+						danhSachXe.push_back(new OtoTai(nhapototai(danhSachXe)));
+						cout << endl;
+						cout << "1. Tiep tuc them oto tai  --- 0. Thoat" << endl;
+						cout << "Nhap:";
+						cin >> nhap;
+					} while (nhap != 0);
+					break;
+				}
+				default:
+				{
+					cout << "Khong hop le ! " << endl;
+					luaChon = 1;
+				}
+				}
+				if (chon == 1 || chon == 2)
+				{
+					cout << "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-" << endl;
+					cout << "1. Tiep tuc them xe" << endl;
+					cout << "0. Thoat khoi phan nhap" << endl;
+					cout << "Nhap:";
+					cin >> luaChon;
+				}
+			} while (luaChon != 0);
+		}
+		catch (const exception& e)
 		{
-			luaChon = 0;
-			break;
+			cerr << "Loi: " << e.what() << endl;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		}
-		case 1:
-		{
-			int nhap;
-			cout << "THEM XE OTO KHACH" << endl;
-			cout << "-------------------" << endl;
-			do
-			{
-				danhSachXe.push_back(new OtoKhach(nhapotokhach()));
-				cout << endl;
-				cout << "1. Tiep tuc them oto khach  --- 0. Thoat" << endl;
-				cout << "Nhap:";
-				cin >> nhap;
-			} while (nhap != 0);
-			break;
-		}
-		case 2:
-		{
-			int nhap;
-			cout << "THEM XE OTO TAI" << endl;
-			cout << "-------------------" << endl;
-			do
-			{
-				danhSachXe.push_back(new OtoTai(nhapototai()));
-				cout << endl;
-				cout << "1. Tiep tuc them oto tai  --- 0. Thoat" << endl;
-				cout << "Nhap:";
-				cin >> nhap;
-			} while (nhap != 0);
-			break;
-		}
-		default:
-		{
-			cout << "Khong hop le ! " << endl;
-			luaChon = 1;
-		}
-		}
-		if (chon == 1 || chon == 2)
-		{
-			cout << "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-" << endl;
-			cout << "1. Tiep tuc them xe" << endl;
-			cout << "0. Thoat khoi phan nhap" << endl;
-			cout << "Nhap:";
-			cin >> luaChon;
-		}
-	} while (luaChon != 0);
+	}
 }
 void demSoLuongXe(const vector<Showroom*>& danhSachXe) {
 	vector<Showroom*> danhSachXeThoaDieuKien;
 	int count = 0;
+	cout << "\nDanh sach xe co thue truoc ba > 200.000.000\n";
 	cout << endl;
 	cout << setfill('=') << setw(65) << right << " * Oto Khach * " << setw(42) << right << "=" << endl;
 	cout << endl;
 	khung();
-	cout << setw(16) << left << "Loai Xe" << setw(10) << left << "So cho" << setw(15) << left << "Thue" << endl;
+	cout << setw(16) << left << "Loai Xe" << setw(12) << left << "So cho" << setw(17) << left << "Thue" << endl;
 	cout << setfill('-') << setw(107) << "-" << endl;
 	for (int i = 0; i < danhSachXe.size(); i++) {
 		if (OtoKhach* otokhach = dynamic_cast<OtoKhach*>(danhSachXe[i])) {
@@ -174,7 +204,7 @@ void demSoLuongXe(const vector<Showroom*>& danhSachXe) {
 	cout << setfill('-') << setw(107) << "-" << endl;
 	for (int i = 0; i < danhSachXe.size(); i++) {
 		if (OtoTai* ototai = dynamic_cast<OtoTai*>(danhSachXe[i])) {
-			if (ototai->thueTruocBa() > 2000000) {
+			if (ototai->thueTruocBa() > 200000000) {
 				danhSachXe[i]->toString();
 				count++;
 			}
@@ -194,7 +224,7 @@ void xuatOtoKhachDuocSXNamx(vector<Showroom*> danhSachXe) {
 	cout << setfill('=') << setw(65) << right << " * Oto Khach * " << setw(42) << right << "=" << endl;
 	cout << endl;
 	khung();
-	cout << setw(16) << left << "Loai Xe" << setw(10) << left << "So cho" << setw(15) << left << "Thue" << endl;
+	cout << setw(16) << left << "Loai Xe" << setw(12) << left << "So cho" << setw(17) << left << "Thue" << endl;
 	cout << setfill('-') << setw(107) << "-" << endl;
 	for (int i = 0; i < danhSachXe.size(); i++) {
 		if (OtoKhach* otokhach = dynamic_cast<OtoKhach*>(danhSachXe[i])) {
@@ -205,13 +235,13 @@ void xuatOtoKhachDuocSXNamx(vector<Showroom*> danhSachXe) {
 	do {
 		int namsx;
 		int count = 0;
-		cout << "Nhap nam san xuat: ";
+		cout << "\nNhap nam san xuat: ";
 		cin >> namsx;
 		cout << endl;
 		cout << setfill('=') << setw(65) << right << " * Oto Khach * " << setw(42) << right << "=" << endl;
 		cout << endl;
 		khung();
-		cout << setw(16) << left << "Loai Xe" << setw(10) << left << "So cho" << setw(15) << left << "Thue" << endl;
+		cout << setw(16) << left << "Loai Xe" << setw(12) << left << "So cho" << setw(17) << left << "Thue" << endl;
 		cout << setfill('-') << setw(107) << "-" << endl;
 		for (int i = 0; i < danhSachXe.size(); i++) {
 			if (OtoKhach* otokhach = dynamic_cast<OtoKhach*>(danhSachXe[i])) {
@@ -235,6 +265,7 @@ void xuatOtoKhachDuocSXNamx(vector<Showroom*> danhSachXe) {
 		cin >> nhap;
 	} while (nhap == 1);
 }
+
 void capNhatGiaTriXe(vector<Showroom*>& danhSachXe) {
 	cout << endl;
 	cout << "DANH SACH XE TRUOC KHI CAP NHAT GIA" << endl;
@@ -253,11 +284,11 @@ void capNhatGiaTriXe(vector<Showroom*>& danhSachXe) {
 				if (ma == otokhach->getMa()) {
 					cout << endl;
 					cout << "Cap nhat tri gia xe cho " << otokhach->getMa() << ": ";
-					int giaXe;
+					long int giaXe;
 					cin >> giaXe;
 					otokhach->setTriGiaXe(giaXe);
 					khung();
-					cout << setw(16) << left << "Loai Xe" << setw(10) << left << "So cho" << setw(15) << left << "Thue" << endl;
+					cout << setw(16) << left << "Loai Xe" << setw(12) << left << "So cho" << setw(17) << left << "Thue" << endl;
 					cout << setfill('-') << setw(107) << "-" << endl;
 					danhSachXe[i]->toString();
 					count++;
@@ -298,6 +329,9 @@ void sapXepGiamTheoNamSanXuat(vector<Showroom*>& danhSachXe) {
 	cout << "DANH SACH XE TRUOC KHI SAP XEP";
 	xuatDanhSachXe(danhSachXe);
 	cout << endl;
+
+	sort(danhSachXe.begin(), danhSachXe.end(), soSanhNamSX);
+
 	cout << "DANH SACH XE SAU KHI SAP XEP GIAM DAN THEO NAM SAN XUAT \n";
 	cout << endl;
 	for (int i = 0; i < danhSachXe.size(); i++) {

@@ -190,7 +190,7 @@ void demSoLuongXe(const vector<Showroom*>& danhSachXe) {
 	cout << setfill('-') << setw(107) << "-" << endl;
 	for (int i = 0; i < danhSachXe.size(); i++) {
 		if (OtoKhach* otokhach = dynamic_cast<OtoKhach*>(danhSachXe[i])) {
-			if (otokhach->thueTruocBa() > 2000000) {
+			if (otokhach->thueTruocBa() > 200000000) {
 				danhSachXe[i]->toString();
 				count++;
 			}

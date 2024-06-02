@@ -1,5 +1,5 @@
 #pragma once
-#include "quanLyPhongHoc.h"
+#include "PhongHoc.h"
 class PhongMayTinh : public PhongHoc
 {
 private:
@@ -14,4 +14,6 @@ public:
 	friend ostream& operator<<(ostream& out, const PhongMayTinh& f);
 
 };
+
+
 

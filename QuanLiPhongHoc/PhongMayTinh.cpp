@@ -8,6 +8,9 @@ PhongMayTinh::PhongMayTinh()
 PhongMayTinh::PhongMayTinh(string maPhong, string dayNha, float dienTich, int bongDen, int mayTinh)
 	:PhongHoc(maPhong, dayNha, dienTich, bongDen)
 {
+	if (mayTinh <= 0) {
+		throw invalid_argument("So luong may tinh phai lon hon 0");
+	}
 	this->mayTinh = mayTinh;
 }
 
@@ -31,7 +34,7 @@ void PhongMayTinh::danhSach() const
 
 bool PhongMayTinh::datChuan() const
 {
-	return getMayTinh() >= getDienTich() / 1.5;
+	return PhongHoc::isDuAnhSang() && getMayTinh() >= getDienTich() / 1.5;
 }
 
 ostream& operator<<(ostream& out, const PhongMayTinh& f)
@@ -39,4 +42,3 @@ ostream& operator<<(ostream& out, const PhongMayTinh& f)
 	f.danhSach();
 	return out;
 }
-

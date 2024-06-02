@@ -1,4 +1,4 @@
-#include "quanLyPhongHoc.h"
+#include "PhongHoc.h"
 
 PhongHoc::PhongHoc()
 {
@@ -10,8 +10,17 @@ PhongHoc::PhongHoc()
 
 PhongHoc::PhongHoc(string maPhong, string dayNha, float dienTich, int bongDen)
 {
+	if (maPhong.empty()) {
+		throw invalid_argument("Ma khong duoc rong");
+	}
 	this->maPhong = maPhong;
+	if (dayNha.empty()) {
+		throw invalid_argument("Day nha khong duoc rong");
+	}
 	this->dayNha = dayNha;
+	if (dienTich <= 0) {
+		throw invalid_argument("Dien tich phai lon hon 0");
+	}
 	this->dienTich = dienTich;
 	this->bongDen = bongDen;
 }
@@ -64,9 +73,14 @@ int PhongHoc::getBongDen() const
 	return this->bongDen;
 }
 
-bool PhongHoc::datChuan() const
+bool PhongHoc::isDuAnhSang() const
 {
 	return getBongDen() >= getDienTich() / 10;
+}
+
+bool PhongHoc::datChuan() const
+{
+	return isDuAnhSang();
 }
 
 void PhongHoc::danhSach() const
@@ -83,4 +97,3 @@ ostream& operator<<(ostream& out, const PhongHoc& f)
 	return out;
 
 }
-

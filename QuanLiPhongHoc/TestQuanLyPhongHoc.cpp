@@ -1,5 +1,5 @@
 #pragma
-#include "quanLyPhongHoc.h"
+#include "PhongHoc.h"
 #include "PhongLiThuyet.h"
 #include "PhongMayTinh.h"
 #include "PhongThiNghiem.h"
@@ -12,7 +12,7 @@ void khung() {
 void nhapCung(vector<PhongHoc*>& danhSachPhong) {
 	danhSachPhong.push_back(new PhongLiThuyet("LT001", "C", 32, 4, 1));
 	danhSachPhong.push_back(new PhongMayTinh("MT003", "N", 48, 3, 20));
-	danhSachPhong.push_back(new PhongThiNghiem("TN005", "A", 50, 8, "Sinh hoc", 100, 4));
+	danhSachPhong.push_back(new PhongThiNghiem("TN005", "A", 50, 8, "Sinh hoc", 100, 1));
 	danhSachPhong.push_back(new PhongLiThuyet("LT003", "D", 52, 4, 0));
 	danhSachPhong.push_back(new PhongMayTinh("MT001", "D", 52, 7, 38));
 	danhSachPhong.push_back(new PhongThiNghiem("TN004", "B", 36, 2, "Hoa hoc", 50, 0));
@@ -140,77 +140,87 @@ PhongThiNghiem themPhongThiNghiem(vector<PhongHoc*>& danhSachPhong) {
 void nhapThemPhong(vector<PhongHoc*>& danhSachPhong) {
 	int luaChon = 1;
 	while (luaChon != 0) {
-		do {
-			int chon;
-			cout << "--------------------------------" << endl;
-			cout << "1. Them phong li thuyet" << endl;
-			cout << "2. Them phong may tinh" << endl;
-			cout << "3. Them phong thi nghiem" << endl;
-			cout << "0. Thoat khoi phan nhap " << endl;
-			cout << "--------------------------------" << endl;
-			cout << "Nhap: ";
-			cin >> chon;
-			switch (chon) {
-			case 0:
-			{
-				luaChon = 0;
-				break;
-			}
-			case 1:
-			{
-				int nhap;
-				do {
-					danhSachPhong.push_back(new PhongLiThuyet(themPhongLiThuyet(danhSachPhong)));
-					cout << endl;
-					cout << "1. Tiep tuc them phong li thuyet  --- 0. Thoat" << endl;
-					cout << "Nhap:";
-					cin >> nhap;
-				} while (nhap != 0);
-				break;
-			}
-			case 2:
-			{
-				int nhap;
-				do {
-					danhSachPhong.push_back(new PhongMayTinh(themPhongMayTinh(danhSachPhong)));
-					cout << endl;
-					cout << "1. Tiep tuc them phong may tinh  --- 0. Thoat" << endl;
-					cout << "Nhap:";
-					cin >> nhap;
-				} while (nhap != 0);
-				break;
-			}
-			case 3:
-			{
-				int nhap;
-				do {
-					danhSachPhong.push_back(new PhongThiNghiem(themPhongThiNghiem(danhSachPhong)));
-					cout << endl;
-					cout << "1. Tiep tuc them phong mthi nghiem  --- 0. Thoat" << endl;
-					cout << "Nhap:";
-					cin >> nhap;
-				} while (nhap != 0);
-				break;
+		try {
+			do {
+				int chon;
+				cout << "--------------------------------" << endl;
+				cout << "1. Them phong li thuyet" << endl;
+				cout << "2. Them phong may tinh" << endl;
+				cout << "3. Them phong thi nghiem" << endl;
+				cout << "0. Thoat khoi phan nhap " << endl;
+				cout << "--------------------------------" << endl;
+				cout << "Nhap: ";
+				cin >> chon;
+				switch (chon) {
+				case 0:
+				{
+					luaChon = 0;
+					break;
+				}
+				case 1:
+				{
+					int nhap;
+					do {
+						danhSachPhong.push_back(new PhongLiThuyet(themPhongLiThuyet(danhSachPhong)));
+						cout << endl;
+						cout << "1. Tiep tuc them phong li thuyet  --- 0. Thoat" << endl;
+						cout << "Nhap:";
+						cin >> nhap;
+					} while (nhap != 0);
+					break;
+				}
+				case 2:
+				{
+					int nhap;
+					do {
+						danhSachPhong.push_back(new PhongMayTinh(themPhongMayTinh(danhSachPhong)));
+						cout << endl;
+						cout << "1. Tiep tuc them phong may tinh  --- 0. Thoat" << endl;
+						cout << "Nhap:";
+						cin >> nhap;
+					} while (nhap != 0);
+					break;
+				}
+				case 3:
+				{
+					int nhap;
+					do {
+						danhSachPhong.push_back(new PhongThiNghiem(themPhongThiNghiem(danhSachPhong)));
+						cout << endl;
+						cout << "1. Tiep tuc them phong mthi nghiem  --- 0. Thoat" << endl;
+						cout << "Nhap:";
+						cin >> nhap;
+					} while (nhap != 0);
+					break;
 
-			}
-			default:
-			{
-				cout << "Khong hop le ! " << endl;
-				luaChon = 1;
-			}
-			}
-			if (chon == 1 || chon == 2 || chon == 3)
-			{
-				cout << "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-" << endl;
-				cout << "1. Tiep tuc them phong" << endl;
-				cout << "0. Thoat khoi phan nhap" << endl;
-				cout << "Nhap:";
-				cin >> luaChon;
-			}
-		} while (luaChon != 0);
+				}
+				default:
+				{
+					cout << "Khong hop le ! " << endl;
+					luaChon = 1;
+				}
+				}
+				if (chon == 1 || chon == 2 || chon == 3)
+				{
+					cout << "-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-" << endl;
+					cout << "1. Tiep tuc them phong" << endl;
+					cout << "0. Thoat khoi phan nhap" << endl;
+					cout << "Nhap:";
+					cin >> luaChon;
+				}
+			} while (luaChon != 0);
+		}
+		catch (const exception& e)
+		{
+			cerr << "Loi: " << e.what() << endl;
+			cin.clear();
+			cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		}
 	}
 }
 void timKiemPhongHoc(vector<PhongHoc*> danhSachPhong) {
+	xuatDanhSach(danhSachPhong);
+	cout << endl;
 	int nhap = 0;
 	do {
 		string maPhongCanTim;
@@ -317,7 +327,7 @@ void sapXepTangDanTheoDayNha(vector<PhongHoc*>& danhSachPhong) {
 	xuatDanhSach(danhSachPhong);
 	cout << endl;
 	sort(danhSachPhong.begin(), danhSachPhong.end(), soSanhDayNha);
-	cout << "Danh sach phong sau khi sap xep tang dan tho day nha\n";
+	cout << "Danh sach phong sau khi sap xep tang dan theo day nha\n";
 	cout << endl;
 	for (int i = 0; i < danhSachPhong.size(); i++) {
 		danhSachPhong[i]->danhSach();
@@ -451,32 +461,26 @@ void layPhongCo60May(vector<PhongHoc*> danhSachPhong) {
 	}
 }
 void menu() {
-	cout << "       QUAN LY PHONG HOC   \n";
+	cout << "        QUAN LY PHONG HOC   \n";
 	cout << endl;
 	cout << "-----------------MENU-----------------" << endl;
-	cout << "1. Nhap cung va xuat danh sach" << endl;
-	cout << "2. Them phong hoc vao danh sach" << endl;
-	cout << "3. Tim kiem phong hoc" << endl;
-	cout << "4. Danh sach phong hoc dat chuan" << endl;
-	cout << "5. Sap xep tang dan theo day nha" << endl;
-	cout << "6. Sap xep giam dan theo dien tich" << endl;
-	cout << "7. Sap xep tang dan theo so bong den" << endl;
-	cout << "8. Cap nhat so may tinh cho phong may tinh" << endl;
-	cout << "9. Xoa phong hoc" << endl;
+	cout << "1.  Nhap cung va xuat danh sach" << endl;
+	cout << "2.  Them phong hoc vao danh sach" << endl;
+	cout << "3.  Tim kiem phong hoc" << endl;
+	cout << "4.  Danh sach phong hoc dat chuan" << endl;
+	cout << "5.  Sap xep tang dan theo day nha" << endl;
+	cout << "6.  Sap xep giam dan theo dien tich" << endl;
+	cout << "7.  Sap xep tang dan theo so bong den" << endl;
+	cout << "8.  Cap nhat so may tinh cho phong may tinh" << endl;
+	cout << "9.  Xoa phong hoc" << endl;
 	cout << "10. Tinh tong so phong hoc" << endl;
 	cout << "11. Danh sach cac phong co 60 may" << endl;
-	cout << "0. Thoat chuong trinh                      " << endl;
+	cout << "0.  Thoat chuong trinh                      " << endl;
 	cout << "===============================================" << endl;
 
 }
 int main() {
 	vector<PhongHoc*> danhSachPhong;
-	nhapCung(danhSachPhong);
-	xuatDanhSach(danhSachPhong);
-	//nhapThemPhong(danhSachPhong);
-	//timKiemPhongHoc(danhSachPhong);
-	//layPhongHocDatChuan(danhSachPhong);
-	sapXepTangDanTheoDayNha(danhSachPhong);
 	int luaChon, chon;
 	do
 	{

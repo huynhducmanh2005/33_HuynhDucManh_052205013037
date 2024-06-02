@@ -127,17 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="PhongHoc.h" />
     <ClInclude Include="PhongLiThuyet.h" />
     <ClInclude Include="PhongMayTinh.h" />
     <ClInclude Include="PhongThiNghiem.h" />
-    <ClInclude Include="quanLyPhongHoc.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PhongHoc.cpp" />
     <ClCompile Include="PhongLiThuyet.cpp" />
     <ClCompile Include="PhongMayTinh.cpp" />
     <ClCompile Include="PhongThiNghiem.cpp" />
-    <ClCompile Include="quanLyPhongHoc.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="TestQuanLyPhongHoc.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

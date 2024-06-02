@@ -24,7 +24,7 @@
     <ClInclude Include="PhongThiNghiem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="quanLyPhongHoc.h">
+    <ClInclude Include="PhongHoc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,10 +38,10 @@
     <ClCompile Include="PhongThiNghiem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="quanLyPhongHoc.cpp">
+    <ClCompile Include="TestQuanLyPhongHoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="PhongHoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

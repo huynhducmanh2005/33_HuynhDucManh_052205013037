@@ -26,10 +26,14 @@ public:
 	string getDayNha() const;
 	float getDienTich() const;
 	int getBongDen() const;
+	bool isDuAnhSang() const;
 	virtual bool datChuan() const;
 	virtual void danhSach() const;
 	friend ostream& operator<< (ostream& out, const PhongHoc& f);
 
 
 };
+
+
+
 

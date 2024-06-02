@@ -1,20 +1,20 @@
 #pragma once
-#include "quanLyPhongHoc.h"
+#include "PhongHoc.h"
 class PhongThiNghiem :public PhongHoc
 {
 private:
 	string chuyenNganh;
 	int sucChua;
-	int bonRua;
+	bool bonRua;
 public:
 	PhongThiNghiem();
-	PhongThiNghiem(string, string, float, int, string, int, int);
+	PhongThiNghiem(string, string, float, int, string, int, bool);
 	void setChuyenNganh(string chuyenNganh);
 	void setSucChua(int sucChua);
-	void setBonRua(int bonRua);
+	void setBonRua(bool bonRua);
 	string getChuyenNganh() const;
 	int getSucChua() const;
-	int getBonRua() const;
+	bool getBonRua() const;
 	void danhSach() const override;
 	bool datChuan() const override;
 	friend ostream& operator<<(ostream& out, const PhongThiNghiem& f);
